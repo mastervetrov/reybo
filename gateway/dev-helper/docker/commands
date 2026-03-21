@@ -1,0 +1,5 @@
+docker compose up
+docker ps -a
+docker rm 'container_id'
+
+docker exec -it postgres psql -U postgres - connect ro db

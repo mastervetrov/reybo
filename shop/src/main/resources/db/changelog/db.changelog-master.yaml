@@ -1,0 +1,666 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Rumyancev Ivan
+      changes:
+        - createTable:
+            tableName: permission
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: role_id
+                  type: integer
+
+
+
+  - changeSet:
+      id: 2
+      author: Rumyancev Ivan
+      changes:
+        - createTable:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: TEXT
+              - column:
+                  name: retail_price
+                  type: decimal
+                  constraints:
+                    nullable: false
+              - column:
+                  name: dealer_price
+                  type: decimal
+                  constraints:
+                    nullable: false
+              - column:
+                  name: partner_price
+                  type: decimal
+                  constraints:
+                    nullable: false
+              - column:
+                  name: count
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_new
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_hit
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: picture
+                  type: varchar(1000)
+              - column:
+                  name: category_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+
+
+  - changeSet:
+      id: 3
+      author: Rumyancev Ivan
+      changes:
+        - createTable:
+            tableName: review_comment
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: date_time
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: content
+                  type: varchar(2000)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: reviews_list_id
+                  type: integer
+                  constraints:
+                    nullable: false
+
+
+  - changeSet:
+      id: 4
+      author: Rumyancev Ivan
+      changes:
+        - createTable:
+            tableName: reviews_list
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: product_id
+                  type: integer
+                  constraints:
+                    nullable: false
+
+
+  - changeSet:
+      id: 5
+      author: Rumyancev Ivan
+      changes:
+        - createTable:
+            tableName: role
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+                    unique: true
+
+
+  - changeSet:
+      id: 6
+      author: Rumyancev Ivan
+      changes:
+        - createTable:
+            tableName: user
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: first_name
+                  type: varchar(100)
+              - column:
+                  name: last_name
+                  type: varchar(100)
+              - column:
+                  name: phone
+                  type: varchar(20)
+              - column:
+                  name: created_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_active
+                  type: boolean
+                  constraints:
+                    nullable: false
+
+
+  - changeSet:
+      id: 7
+      author: Rumyancev Ivan
+      changes:
+        - createTable:
+            tableName: category
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: parent_id
+                  type: integer
+
+
+  - changeSet:
+      id: 8
+      author: Rumyancev Ivan
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: permission
+            baseColumnNames: role_id
+            referencedTableName: role
+            referencedColumnNames: id
+            constraintName: fk_permission_role_id
+
+        - addForeignKeyConstraint:
+            baseTableName: review_comment
+            baseColumnNames: user_id
+            referencedTableName: user
+            referencedColumnNames: id
+            constraintName: fk_review_comment_user_id
+
+        - addForeignKeyConstraint:
+            baseTableName: review_comment
+            baseColumnNames: reviews_list_id
+            referencedTableName: reviews_list
+            referencedColumnNames: id
+            constraintName: fk_review_comment_reviews_list_id
+
+        - addForeignKeyConstraint:
+            baseTableName: reviews_list
+            baseColumnNames: product_id
+            referencedTableName: product
+            referencedColumnNames: id
+            constraintName: fk_reviews_list_product_id
+
+        - addForeignKeyConstraint:
+            baseTableName: user
+            baseColumnNames: role_id
+            referencedTableName: role
+            referencedColumnNames: id
+            constraintName: fk_user_role_id
+
+        - addForeignKeyConstraint:
+            baseTableName: category
+            baseColumnNames: parent_id
+            referencedTableName: category
+            referencedColumnNames: id
+            constraintName: fk_category_parent_id
+
+        - addForeignKeyConstraint:
+            baseTableName: product
+            baseColumnNames: category_id
+            referencedTableName: category
+            referencedColumnNames: id
+            constraintName: fk_product_category_id
+
+
+  - changeSet:
+      id: 9
+      author: Rumyancev Ivan
+      changes:
+        - createTable:
+            tableName: cart
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: integer
+              - column:
+                  name: created_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+
+
+  - changeSet:
+      id: 10
+      author: Rumyancev Ivan
+      changes:
+        - createTable:
+            tableName: cart_item
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: cart_id
+                  type: integer
+              - column:
+                  name: product_id
+                  type: integer
+              - column:
+                  name: quantity
+                  type: integer
+                  constraints:
+                    nullable: false
+
+
+  - changeSet:
+      id: 11
+      author: Rumyancev Ivan
+      changes:
+        - createTable:
+            tableName: order
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: order_status_id
+                  type: integer
+              - column:
+                  name: total_amount
+                  type: decimal
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: transaction_id
+                  type: integer
+
+
+  - changeSet:
+      id: 12
+      author: Rumyancev Ivan
+      changes:
+        - createTable:
+            tableName: order_history
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: order_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: order_status_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: total_amount
+                  type: decimal
+                  constraints:
+                    nullable: false
+              - column:
+                  name: timestamp
+                  type: timestamp
+                  constraints:
+                    nullable: false
+
+
+  - changeSet:
+      id: 13
+      author: Rumyancev Ivan
+      changes:
+        - createTable:
+            tableName: order_item
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: order_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: product_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: quantity
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: price
+                  type: decimal
+                  constraints:
+                    nullable: false
+
+
+  - changeSet:
+      id: 14
+      author: Rumyancev Ivan
+      changes:
+        - createTable:
+            tableName: order_item_history
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: order_history_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: product_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: quantity
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: price
+                  type: decimal
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+
+
+  - changeSet:
+      id: 15
+      author: Rumyancev Ivan
+      changes:
+        - createTable:
+            tableName: order_status
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(100)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(1000)
+
+
+  - changeSet:
+      id: 16
+      author: Rumyancev Ivan
+      changes:
+        - createTable:
+            tableName: transaction
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: order_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: amount
+                  type: decimal
+                  constraints:
+                    nullable: false
+              - column:
+                  name: payment_method
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: timestamp
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: transaction_id
+                  type: varchar(1000)
+                  constraints:
+                    unique: true
+
+
+  - changeSet:
+      id: 17
+      author: Rumyancev Ivan
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: cart
+            baseColumnNames: user_id
+            referencedTableName: user
+            referencedColumnNames: id
+            constraintName: fk_cart_user_id
+
+        - addForeignKeyConstraint:
+            baseTableName: cart_item
+            baseColumnNames: cart_id
+            referencedTableName: cart
+            referencedColumnNames: id
+            constraintName: fk_cart_item_cart_id
+
+        - addForeignKeyConstraint:
+            baseTableName: cart_item
+            baseColumnNames: product_id
+            referencedTableName: product
+            referencedColumnNames: id
+            constraintName: fk_cart_item_product_id
+
+        - addForeignKeyConstraint:
+            baseTableName: order
+            baseColumnNames: user_id
+            referencedTableName: user
+            referencedColumnNames: id
+            constraintName: fk_order_user_id
+
+        - addForeignKeyConstraint:
+            baseTableName: order
+            baseColumnNames: order_status_id
+            referencedTableName: order_status
+            referencedColumnNames: id
+            constraintName: fk_order_order_status_id
+
+        - addForeignKeyConstraint:
+            baseTableName: order
+            baseColumnNames: transaction_id
+            referencedTableName: transaction
+            referencedColumnNames: id
+            constraintName: fk_order_transaction_id
+
+        - addForeignKeyConstraint:
+            baseTableName: transaction
+            baseColumnNames: order_id
+            referencedTableName: order
+            referencedColumnNames: id
+            constraintName: fk_transaction_order_id
+
+        - addForeignKeyConstraint:
+            baseTableName: order_history
+            baseColumnNames: order_id
+            referencedTableName: order
+            referencedColumnNames: id
+            constraintName: fk_order_history_order_id
+
+        - addForeignKeyConstraint:
+            baseTableName: order_history
+            baseColumnNames: user_id
+            referencedTableName: user
+            referencedColumnNames: id
+            constraintName: fk_order_history_user_id
+
+        - addForeignKeyConstraint:
+            baseTableName: order_history
+            baseColumnNames: order_status_id
+            referencedTableName: order_status
+            referencedColumnNames: id
+            constraintName: fk_order_history_order_status_id
+
+        - addForeignKeyConstraint:
+            baseTableName: order_item
+            baseColumnNames: order_id
+            referencedTableName: order
+            referencedColumnNames: id
+            constraintName: fk_order_item_order_id
+
+        - addForeignKeyConstraint:
+            baseTableName: order_item
+            baseColumnNames: product_id
+            referencedTableName: product
+            referencedColumnNames: id
+            constraintName: fk_order_item_product_id

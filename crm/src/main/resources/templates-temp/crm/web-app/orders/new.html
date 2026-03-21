@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма заказа сервисного обслуживания</title>
+</head>
+<body>
+
+<div id="serviceOrderFormHtml">
+<!-- Модальное окно с размытым фоном -->
+<div id="modalOverlay" class="modal-overlay" th:if="${showForm != null ? showForm : true}">
+
+    <!-- Форма -->
+    <div class="form-container" onclick="event.stopPropagation()">
+
+        <!-- Заголовок с кнопкой закрытия -->
+        <div class="form-header">
+            <h2 class="form-title">📱 Сервисный заказ</h2>
+            <button type="button" class="close-button" onclick="hideForm()" title="Закрыть">✕</button>
+        </div>
+
+        <!-- Форма Thymeleaf -->
+        <form action="#" th:action="@{/api/reybo/web-app/orders/new}" th:object="${serviceOrderForm}" method="post">
+
+            <!-- Секция 1: Информация о клиенте -->
+            <div class="form-section">
+                <h3 class="section-title">👤 Информация о клиенте</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Фамилия</label>
+                        <input type="text" class="form-input" th:field="*{surname}" placeholder="Иванов">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Имя</label>
+                        <input type="text" class="form-input" th:field="*{firstname}" placeholder="Иван">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Отчество</label>
+                        <input type="text" class="form-input" th:field="*{lastname}" placeholder="Иванович">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">📞 Телефон</label>
+                        <input type="tel" class="form-input" th:field="*{phone}" placeholder="+7 (999) 123-45-67">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">📢 Откуда узнали</label>
+                        <input type="text" class="form-input" th:field="*{advertisingSource}" placeholder="Яндекс, Instagram, ...">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Секция 2: Информация об устройстве -->
+            <div class="form-section">
+                <h3 class="section-title">📱 Устройство</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Серийный номер</label>
+                        <input type="text" class="form-input" th:field="*{serialNumber}" placeholder="SN-123456789">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Тип устройства</label>
+                        <input type="text" class="form-input" th:field="*{deviceType}" placeholder="Смартфон, Ноутбук, ...">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Бренд</label>
+                        <input type="text" class="form-input" th:field="*{brand}" placeholder="Apple, Samsung, ...">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Модель</label>
+                        <input type="text" class="form-input" th:field="*{model}" placeholder="iPhone 13, Galaxy S23, ...">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">🎨 Цвет</label>
+                        <input type="text" class="form-input" th:field="*{color}" placeholder="Black, White, ...">
+                    </div>
+                    <div class="form-group full-width">
+                        <label class="form-label">📦 Комплектация</label>
+                        <input type="text" class="form-input" th:field="*{equipment}" placeholder="Зарядка, наушники, чехол">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Секция 3: Проблема и состояние -->
+            <div class="form-section">
+                <h3 class="section-title">🔧 Проблема и состояние</h3>
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label class="form-label">⚠️ Неисправность</label>
+                        <input type="text" class="form-input" th:field="*{malfunctions}" placeholder="Опишите проблему">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">💰 Оценочная стоимость</label>
+                        <input type="text" class="form-input" th:field="*{assessedValue}" placeholder="5000 руб">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">✨ Внешний вид</label>
+                        <input type="text" class="form-input" th:field="*{appearance}" placeholder="Хороший, средний, плохой">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">🔐 Пароль/Код</label>
+                        <input type="text" class="form-input" th:field="*{password}" placeholder="1234, qwerty">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Секция 4: Услуги и цены -->
+            <div class="form-section">
+                <h3 class="section-title">💰 Услуги и оплата</h3>
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label class="form-label">🛠️ Согласованные услуги</label>
+                        <input type="text" class="form-input" th:field="*{agreedServices}" placeholder="Замена экрана, диагностика, ...">
+                    </div>
+                    <div class="two-columns">
+                        <div class="form-group">
+                            <label class="form-label">💵 Согласованная цена</label>
+                            <input type="number" class="form-input" th:field="*{agreedPrice}" step="0.01" placeholder="0.00">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">💳 Предоплата</label>
+                            <input type="number" class="form-input" th:field="*{prepayment}" step="0.01" placeholder="0.00">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Секция 5: Исполнители и сроки -->
+            <div class="form-section">
+                <h3 class="section-title">👨‍🔧 Исполнители и сроки</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">🔧 Текущий мастер</label>
+                        <input type="text" class="form-input" th:field="*{currentMaster}" placeholder="Иванов И.И.">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">📅 Срок выполнения</label>
+                        <input type="datetime-local" class="form-input" th:field="*{deadline}">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">👤 Создал менеджер</label>
+                        <input type="text" class="form-input" th:field="*{createdManager}" placeholder="Петров П.П.">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">👤 Текущий менеджер</label>
+                        <input type="text" class="form-input" th:field="*{currentManager}" placeholder="Сидоров С.С.">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">👤 Выдающий менеджер</label>
+                        <input type="text" class="form-input" th:field="*{issuingManager}" placeholder="Иванова И.И.">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Секция 6: Дополнительно -->
+            <div class="form-section">
+                <h3 class="section-title">📋 Дополнительно</h3>
+                <div class="form-grid">
+                    <div class="checkbox-group">
+                        <input type="checkbox" class="form-checkbox" th:field="*{urgently}" id="urgently">
+                        <label for="urgently" class="form-label">⚡ Срочный заказ</label>
+                    </div>
+                    <div class="form-group full-width">
+                        <label class="form-label">📝 Комментарий</label>
+                        <textarea class="form-input" th:field="*{comment}" rows="3" placeholder="Дополнительная информация..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ID скрытое поле -->
+            <input type="hidden" th:field="*{id}">
+
+            <!-- Кнопка отправки -->
+            <button type="submit" class="submit-button">
+                Создать заказ
+            </button>
+        </form>
+    </div>
+    <script>
+        function hideForm() {
+            const overlay = document.getElementById('modalOverlay');
+            overlay.classList.add('hidden');
+        }
+    </script>
+</div>
+</div>
+</body>
+</html>

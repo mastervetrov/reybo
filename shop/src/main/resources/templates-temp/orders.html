@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Product List</title>
+    <link rel="stylesheet" th:href="@{/shop/styles/css/common.css}">
+    <link rel="stylesheet" th:href="@{/shop/styles/css/contact-list.css}">
+    <link rel="stylesheet" th:href="@{/shop/styles/css/header.css}">
+    <link rel="stylesheet" th:href="@{/shop/styles/css/mainpage.css}">
+    <link rel="stylesheet" th:href="@{/shop/styles/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/shop/styles/css/search-result-page.css}">
+    <link rel="stylesheet" th:href="@{/shop/styles/css/products-container.css}">
+    <link rel="stylesheet" th:href="@{/shop/styles/css/orders.css}">
+    <!-- FAVICON DIV -->
+    <div th:replace="fragments/favicon :: favicon"></div>
+</head>
+<body>
+
+<header th:replace="~{fragments :: header}">
+</header>
+
+<body>
+<div class="body-container">
+    <div th:replace="~{fragments :: div.orders-menu-and-data-container}"></div>
+</div>
+</body>
+
+<footer th:replace="~{fragments :: footer}">
+
+</footer>
+<script>
+    function toggleDetails(orderId) {
+        const detailsElement = document.getElementById('details-' + orderId);
+        const detailsElementHiddenAction = document.getElementById('details-hidden-action-' + orderId);
+
+        if (detailsElement.style.display === "none" || detailsElement.style.display === "") {
+            detailsElement.style.display = "block"; // Показываем детали
+            detailsElementHiddenAction.style.border = "1px solid green";
+        } else {
+            detailsElement.style.display = "none"; // Скрываем детали
+            detailsElementHiddenAction.style.border = "1px solid green";
+        }
+    }
+</script>
+</body>
+</html>

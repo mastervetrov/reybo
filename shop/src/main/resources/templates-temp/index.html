@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Запчасти для телефонов</title>
+  <link rel="stylesheet" th:href="@{/shop/styles/css/common.css}">
+  <link rel="stylesheet" th:href="@{/shop/styles/css/contact-list.css}">
+  <link rel="stylesheet" th:href="@{/shop/styles/css/header.css}">
+  <link rel="stylesheet" th:href="@{/shop/styles/css/mainpage.css}">
+  <link rel="stylesheet" th:href="@{/shop/styles/css/footer.css}">
+  <link rel="stylesheet" th:href="@{/style/css/search-result-page.css}">
+  <!-- FAVICON DIV -->
+  <div th:replace="~{fragments/favicon :: favicon}"></div>
+</head>
+
+<header th:replace="~{fragments :: header}">
+</header>
+
+<body>
+  <div class="body-container">
+      <div th:replace="~{fragments :: div.slider-container}"></div>
+<!--      <div th:replace="~{fragments :: div.top-product-container}"></div>-->
+  </div>
+</body>
+
+<footer th:replace="~{fragments :: footer}">
+
+</footer>
+</html>

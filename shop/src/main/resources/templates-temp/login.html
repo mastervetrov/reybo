@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход</title>
+    <link rel="stylesheet" th:href="@{/shop/styles/css/login.css}">
+    <link rel="stylesheet" th:href="@{/shop/styles/css/common.css}">
+    <!-- FAVICON DIV -->
+    <div th:replace="fragments/favicon :: favicon"></div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+    $(document).ready(function () {
+        $("form").on('submit', function (event) {
+            event.preventDefault();
+
+            $.ajax({
+                url: "/api/v1/auth/login",
+                type: "POST",
+                xhrFields: {
+                    withCredentials: true
+                },
+                contentType: "application/json",
+                data: JSON.stringify({
+                    email: $('#email').val(),
+                    password: $('#password').val()
+                }),
+                success: function(response) {
+                    // Обработка успешного входа
+                    window.location.href = "/shop";
+                },
+                error: function() {
+                    alert("Ошибка входа!");
+                }
+            });
+        });
+    });
+</script>
+</head>
+<body>
+
+<body>
+    <div class="enter-form-container">
+        <div th:replace="~{fragments :: div.enter-form}"></div>
+    </div>
+</body>
+
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Поступления</title>
+    <link rel="stylesheet" th:href="@{/reybo/web-app/styles/menu.css}">
+    <link rel="stylesheet" th:href="@{/reybo/web-app/styles/store/receipt/new.css}">
+</head>
+<body>
+<!--Левая часть-->
+<div class="left-part-admin-app">
+    <!--Меню выбора панели, панель рендерится с помощью ajax запросов, меню остается статичным-->
+    <div th:replace="~{reybo/web-app/fragments/common :: div.menu-admin-panel}"></div>
+</div>
+
+<!--Правая часть -->
+<div class="right-part-admin-app">
+    <!-- По id panelContent реализованы ajax запросы для переключения панелей, подробнее в main.js-->
+    <div id="panelContent">
+
+        <div class="store-receipt-panel">
+
+            <div class="header-panel-content-common">
+<!--                <div class="title-panel-receipt-new">-->
+                <div class="title-panel-common">
+
+                <a href="/reybo/web-app/store/receipt" id="arrowStoreReceipt"><img class="img-arrow" src="/reybo/web-app/media/common/arrow.png" alt=""></a><h1>Поступление</h1>
+                </div>
+
+                <div class="elements-container">
+                    <div class="elements-left">
+                        <div class="element">
+                            <div class="element-left" id="element-document">Документ №</div>
+                            <div class="element-right"><input type="text"></div>
+                        </div>
+                        <div class="element">
+                            <div class="element-left" id="element-provider">Поставщик</div>
+                            <div class="element-right"><input type="text"></div>
+                        </div>
+                        <div class="element">
+                            <div class="element-left" id="element-store">Склад</div>
+                            <div class="element-right"><input type="text"></div>
+                        </div>
+                        <div class="element">
+                            <div class="element-left" id="element-responsible">Ответственный</div>
+                            <div class="element-right"><input type="text"></div>
+                        </div>
+                    </div>
+                    <div class="elements-right">
+                        <div class="element">
+                            <div class="element-left" id="element-how-to-accept-the-goods">Как принять товар?</div>
+                            <div class="element-right"></div>
+                        </div>
+                        <div class="element">
+                            <div class="element-left" id="element-document-input-number">Вход. док. №</div>
+                            <div class="element-right"><input type="text"></div>
+                        </div>
+                        <div class="element">
+                            <div class="element-left" id="element-note">Примечание</div>
+                            <div class="element-right"><input type="text"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="body-panel-content-common">
+                <div class="body-panel-content-down-common-store">
+                    <table class="table-receipt">
+                        <thead>
+                        <tr>
+                            <td th:each="parameterName : ${parametersNames}" th:text="${parameterName}" class="parameter-name-container"></td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="product : ${products}">
+                            <td th:each="parameterValue : ${product.getParameters}" th:text="${parameterValue}"></td>
+                        </tr>
+                    </table>
+                    <div class="button-line-top">
+                        <button class="button-add-new">+</button>
+                        <input type="text" placeholder="Добавить товар">
+                        <button>Из справочника</button>
+                    </div>
+                    </tbody>
+                    <div class="button-line-down">
+                        <button class="button-line button-line-main">Создать</button>
+                        <button class="button-line button-cancel">Отмена</button>
+                        <button class="button-line button-print">Печать</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="form-product-upsert">
+            <div>
+                <div>
+                    <p>Название</p>
+                    <input type="text">
+                </div>
+            </div>
+            <div>
+                <div>
+                    <p>Код</p>
+                    <input type="text">
+                </div>
+                <div>
+                    <p>Штрихкод</p>
+                    <input type="text">
+                </div>
+                <div>
+                    <p>Модификация</p>
+                    <input type="text">
+                </div>
+            </div>
+            <div>
+                <div>
+                    <p>Артикул</p>
+                    <input type="text">
+                </div>
+                <div>
+                    <p>Группа</p>
+                    <input type="text">
+                </div>
+                <div>
+                    <p>Страна</p>
+                    <input type="text">
+                </div>
+            </div>
+            <div>
+                <div>
+                    <p>Ед. измерения</p>
+                    <input type="text">
+                </div>
+                <div>
+                    <p>Минимальный остаток</p>
+                    <input type="text">
+                </div>
+                <div>
+                    <p>Гарантия</p>
+                    <input type="text">
+                </div>
+            </div>
+            <div>
+                <div>
+                    <p>Поставщик</p>
+                    <input type="text">
+                </div>
+            </div>
+            <div>
+                <h1>Цены</h1>
+            </div>
+            <div>
+
+                <div>
+                    <div>
+                        <p>Закуп. цена</p>
+                        <input type="text">
+                    </div>
+                    <div>
+                        <p>Ремонтная</p>
+                        <input type="text">
+                    </div>
+                    <div>
+                        <p>Розничная</p>
+                        <input type="text">
+                    </div>
+                    <div>
+                        <p>Минимальная</p>
+                        <input type="text">
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h1>Зарплата</h1>
+            </div>
+            <div>
+                <div>
+                    <div>
+                        <p>Зарплата (%)</p>
+                        <div></div>
+                    </div>
+                    <div>
+                        <p>Зарплата (₽)</p>
+                        <div></div>
+                    </div>
+                </div>
+                <div>Серийный учет (в разработке)</div>
+            </div>
+            <div>
+                <button>Создать</button>
+                <span>Закрыть</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:src="@{/reybo/web-app/scripts/main.js}"></script>
+</body>
+</html>

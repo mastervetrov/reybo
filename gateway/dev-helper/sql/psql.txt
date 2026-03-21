@@ -1,0 +1,22 @@
+docker exec -it postgres psql -U postgres
+docker exec -it postgres psql -U postgres -d reybo
+
+\l - show databases (also \list)
+\c - switch to database
+
+\dn - show schemes
+CREATE SCHEMA 'auth';
+CREATE SCHEMA 'business' AUTHORIZATION 'concrete_user';
+
+\du - full info about user
+SELECT current_user; - show current user
+
+\dt - show tables
+
+CREATE DATABASE database_name; - create database
+DROP database_name;
+
+CREATE TABLE product (id SERIAL PRIMARY KEY, name VARCHAR(255));
+INSERT INTO product (name) VALUES ('phone');
+
+SELECT name, price FROM product LEFT JOIN service;

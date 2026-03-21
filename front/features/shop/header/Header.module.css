@@ -1,0 +1,101 @@
+.headerContainer {
+    max-width: 86%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.headerTopPart {
+    display: flex;
+    justify-content: space-between;
+}
+
+.headerTopPartLeftLink {
+    color: blue;
+    font-size: 14px
+}
+
+.headerTopPartRightLink a{
+    padding-left: 32px;
+    color: grey;
+    font-size: 14px
+}
+
+.headerMiddlePart {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 32px;
+}
+
+.headerMiddlePart div {
+    margin-top: auto;
+    margin-bottom: auto;
+    display: flex;
+}
+
+.logo {
+    height: 4vw;
+}
+
+.searchFormWrap {
+    display: flex;
+    padding-left: 2vw;
+}
+
+.searchInput {
+    outline-color: #c7311a;
+    width: 100%;
+    padding: 10px;
+    padding-left: 12px;
+    border: 1px solid #c7311a;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 16px;
+    height: 48px;
+}
+.searchButton {
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 12px 15px;
+    border: none;
+    background-color: #c7311a;
+    color: white;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+
+    cursor: pointer;
+}
+
+.linksNavGroup div {
+    padding-left: 3vw;
+}
+
+
+div.menuButton {
+    display: none;
+}
+
+.linksNavGroup div.linkNav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.1vw;
+}
+
+.linksNavGroup div.linkNav a img{
+    height: 24px;
+    max-width: 100px;
+}
+
+.horizontalMenu {
+    padding-top: 32px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2vw;
+}
+
+.inputContainer {
+    position: relative;
+    width: 30vw;
+}

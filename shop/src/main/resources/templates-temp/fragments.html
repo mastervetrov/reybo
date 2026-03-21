@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Фрагменты</title>
+    <link rel="stylesheet" th:href="@{/shop/styles/css/header.css}">
+</head>
+
+<header class="header">
+    <div class="header-container">
+    <div class="header-top-part">
+        <div class="left">
+            <a href="#">г. Томск</a>
+        </div>
+        <div class="right">
+            <a href="#">О магазине</a>
+            <a href="#">Гарантия и возврат</a>
+            <a href="#">Доставка</a>
+            <a href="#">Положение об обработке ПД</a>
+            <a href="#">Вакансии</a>
+        </div>
+    </div>
+
+    <div class="header-middle-part">
+        <div class="logo-wrap">
+            <a href="/shop"><img th:src="@{/shop/header/media/reybo-logo.png}" alt="Main page Reybo"></a>
+        </div>
+
+
+        <div class="search-form-wrap">
+            <form action="/shop/search">
+                <div class="input-container">
+                    <input type="text" placeholder="Введите текст">
+                    <button type="submit">Поиск</button>
+                </div>
+            </form>
+        </div>
+
+
+        <div class="navigation-wrap">
+            <nav>
+                <div class="links-nav-group">
+                    <div class="link-nav">
+                        <a href="/shop/login">
+                            <span></span>
+                            <img th:src="@{/shop/header/media/profile-icon.png}" alt="profile-icon">
+<!--<a href="https://www.flaticon.com/ru/free-icons/" title="человек иконки">Человек иконки от apien - Flaticon</a>-->
+                            <span>Войти</span>
+                        </a>
+                    </div>
+                    <div class="link-nav">
+                        <a href="/shop/orders">
+                            <span></span>
+                            <img th:src="@{/shop/header/media/order-icon.png}" alt="order-icon">
+<!--<a href="https://www.flaticon.com/ru/free-icons/-" title="История заказов иконки">История заказов иконки от SBTS2018 - Flaticon</a>-->
+                            <span>Заказы</span>
+                        </a>
+                    </div>
+                    <div class="link-nav">
+                        <a href="#">
+                            <span></span>
+                            <img th:src="@{/shop/header/media/favorite-icon.png}" alt="favorite-icon">
+<!--<a href="https://www.flaticon.com/ru/free-icons/" title="нравиться иконки">Нравиться иконки от Cuputo - Flaticon</a>-->
+                            <span>Избранное</span>
+                        </a>
+                    </div>
+                    <div class="link-nav">
+                        <a href="#">
+                            <span></span>
+<!--<a href="https://www.flaticon.com/ru/free-icons/-" title="умная тележка иконки">Умная тележка иконки от Kiranshastry - Flaticon</a>-->
+                            <img th:src="@{/shop/header/media/shopping-cart-icon.png}" alt="shopping-cart-icon">
+                            <span>Корзина</span>
+                        </a>
+                    </div>
+                    <div class="menu-button"><a href="#" id="menu" class="icon"></a>&#9776;</div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="header-low-part">
+        <div class="horizontal-menu">
+                <a href="#">Товары на расхват</a>
+                <a href="#">Для iPhone</a>
+                <a href="#">Для Android</a>
+                <a href="#">Дисплей</a>
+                <a href="#">Аккумуляторы</a>
+                <a href="#">Снятые запчасти</a>
+        </div>
+    </div>
+    </div>
+</header>
+
+<body>
+    <div class="slider-container">
+        <div class="slider">
+            <input class="slider-input" type="radio" name="slider" id="slide1" checked>
+            <input class="slider-input" type="radio" name="slider" id="slide2">
+
+            <div class="slides">
+                <div class="slide"><img th:src="@{/shop/header/media/img_1.png}" alt=""></div>
+                <div class="slide"><img th:src="@{/shop/header/media/action.jpg}" alt=""></div>
+                <div class="slide"><img th:src="@{/shop/header/media/robot.webp}" alt=""></div>
+            </div>
+
+            <div class="controls">
+                <label class="btn-sld" for="slide1">◀</label>
+                <label class="btn-sld" for="slide2">▶</label>
+            </div>
+        </div>
+    </div>
+    <div class="products-and-categories-container">
+        <div class="categories-container">
+            <div>Здесь появится<br> мощный фильтр
+            </div>
+        </div>
+
+        <div class="products-container">
+            <div th:each="product : ${products}" class="product-block">
+                <h2 th:text="${product.name}">Product Name</h2>
+                <p th:text="${product.description}">Product Description</p>
+                <p>Price: <span th:text="${product.partnerPrice}">Price</span> ₽</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="orders-menu-and-data-container">
+        <div class="orders-menu-container">
+            <div>Здесь появится<br> меню заказов
+            </div>
+        </div>
+        <div class="orders-data-container">
+            <div class="orders-title-container">
+                <div class="orders-title-container-order-number">Номер заказа</div>
+                <div class="orders-title-container-created-date">Дата создания</div>
+                <div class="orders-title-container-total">Сумма</div>
+                <div class="orders-title-container-status">Статус</div>
+            </div>
+
+            <div th:each="orderDto : ${orders}" th:id="'details-hidden-action-' + ${orderDto.id}" class="order-dto-container">
+                <div class="order-dto-container-wrap-internal">
+                    <div class="order-dto-container-header">
+                        <div th:text="'№ ' + ${orderDto.id}" class="order-dto-container-header-id"></div>
+                        <div class="order-dto-container-header-date-created">от 04.01.2025</div>
+                        <div th:text="${orderDto.totalAmount}" class="order-dto-container-header-total-amount"></div>
+                        <div th:text="${orderDto.getStatusDto.getName}" class="order-dto-container-header-status"></div>
+                        <div class="order-dto-container-header-status-button">
+                            <button th:onclick="'toggleDetails(' + ${orderDto.id} + ')'"><div class="order-dto-container-header-status-button-icon">☰</div></button>
+                        </div>
+                    </div>
+                    <div th:id="'details-' + ${orderDto.id}" class="order-dto-container-hidden-part">
+                        <div class="order-dto-container-body">
+                            <div class="order-dto-container-body-part-top">
+                                <div class="order-dto-container-body-part-bottom-product-image"></div>
+                                <div class="order-dto-container-body-part-top-product-name">товар</div>
+                                <div class="order-dto-container-body-part-top-count">количество</div>
+                                <div class="order-dto-container-body-part-top-price">цена</div>
+                                <div class="order-dto-container-body-part-top-amount">сумма</div>
+                            </div>
+                            <div th:each="itemDto : ${orderDto.getItemsDto}" class="order-dto-container-body-part-bottom">
+                                <div class="order-dto-container-body-part-bottom-product-image"></div>
+                                <div th:text="${itemDto.getProductDto.getName}" class="order-dto-container-body-part-bottom-product-name"></div>
+                                <div th:text="${itemDto.getQuantity}" class="order-dto-container-body-part-bottom-order-item-quantity"></div>
+                                <div th:text="${itemDto.getPrice}" class="order-dto-container-body-part-bottom-order-item-price"></div>
+                                <div th:text="${itemDto.getQuantity * itemDto.getPrice}" class="order-dto-container-body-part-bottom-order-item-total-amount"></div>
+                            </div>
+                        </div>
+                        <div class="order-dto-container-footer">
+                            <div class="order-dto-container-footer-result">Итого:</div>
+                            <div class="order-dto-container-footer-total-quantity">10</div>
+                            <div class="order-dto-container-footer-total-price">10000</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================ LOGIN FORM ======================= -->
+    <div class="enter-form">
+        <div class="logo-wrap">
+            <img th:src="@{/shop/header/media/reybo-logo.png}" alt="logo-reybo">
+        </div>
+        <div class="title-login-container">
+            <h1>Вход в личный кабинет</h1>
+        </div>
+        <div class="form-container">
+            <form method="post">
+                <input type="email" id="email" placeholder="Электронная почта">
+                <br>
+                <input type="password" id="password" placeholder="Пароль">
+                <br>
+                <div class="captcha-container">
+                    <img id="captchaImg" th:src="${captchaImage}" alt="captcha">
+                </div>
+                <input type="text" id="captchaCode" placeholder="Введите код с картинки">
+                <div class="buttons-container">
+                    <div class="button-enter-container">
+                        <button type="submit">Войти</button>
+                    </div>
+                    <div class="button-forgot-password-container">
+                        <a href="/shop/forgot">Забыл пароль</a>
+                    </div>
+                    <div class="button-registration-container">
+                        <a href="/shop/register">Регистрация</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- ================ /LOGIN FORM ======================= -->
+
+    <!-- ================ REGISTRATION FORM ======================= -->
+    <div class="enter-form-registration">
+        <div class="logo-wrap">
+            <img th:src="@{/shop/header/media/reybo-logo.png}" alt="logo-reybo">
+        </div>
+        <div class="title-login-container">
+            <h1>Регистрация</h1>
+        </div>
+        <div class="form-container">
+            <form method="post">
+                <input type="text" id="firstName" name="first_name"  placeholder="Имя">
+                <br>
+                <input type="text" id="lastName" name="last_name"  placeholder="Фамилия">
+                <br>
+                <input type="email" id="email" placeholder="Email">
+                <br>
+                <input type="password" id="password1" placeholder="Придумайте пароль">
+                <br>
+                <input type="password" id="password2" placeholder="Подтвердите пароль">
+                <br>
+                <div class="captcha-container">
+                    <img id="captchaImg" th:src="${captchaImage}" alt="captcha">
+                </div>
+                <input type="text" id="captchaCode" placeholder="Введите код с картинки">
+                <div class="buttons-container">
+                    <div class="button-enter-container">
+                        <button type="submit">Зарегистрироваться</button>
+                    </div>
+                    <div class="account_is_exist_link">
+                        <a href="/shop/login">Уже есть аккаунт? Войти</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- ================ /REGISTRATION FORM ======================= -->
+
+
+    <!-- ================ FORGOT FORM ======================= -->
+    <div class="enter-form-forgot">
+        <div class="logo-wrap">
+            <img th:src="@{/shop/header/media/reybo-logo.png}" alt="logo-reybo">
+        </div>
+        <div class="title-login-container">
+            <h1>Восстановление доступа</h1>
+        </div>
+        <div class="form-container">
+            <form method="post">
+                <input type="text" placeholder="Email">
+                <br>
+                <div class="captcha-container">
+                    <img id="captchaImg" th:src="${captchaImage}" alt="captcha">
+                </div>
+                <input type="text" id="captchaCode" placeholder="Введите код с картинки">
+                <div class="buttons-container">
+                    <div class="button-enter-container">
+                        <button type="submit">Отправить запрос на восстановление пароля</button>
+                    </div>
+                    <div class="account_is_exist_link">
+                        <a href="/shop/login">Вернуться</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- ================ /FORGOT FORM ======================= -->
+
+    <div class="cart-menu-and-container">
+        <div ></div>
+    </div>
+</body>
+
+<footer>
+    <div class="footer-container">
+        <div class="left-block-footer">
+            <div class="header-block-footer">Каталог</div>
+                <div class="link-footer"><a href="">Ремонт телефонов</a></div>
+                <div class="link-footer"><a href="">По дилерским ценам</a></div>
+                <div class="link-footer"><a href="">Товары со скидкой</a></div>
+                <div class="link-footer"><a href="">Новинки</a></div>
+                <div class="link-footer"><a href="">Предзаказ</a></div>
+                <div class="link-footer"><a href="">Прайс</a></div>
+                <div class="link-footer"><a href="">Прайс дилер</a></div>
+        </div>
+        <div class="pre-left-block-footer">
+            <div class="header-block-footer">Помощь</div>
+                <div class="link-footer"><a href="">Оплата</a></div>
+                <div class="link-footer"><a href="">Доставка</a></div>
+                <div class="link-footer"><a href="">Гарантия</a></div>
+                <div class="link-footer"><a href="">Система скидок</a></div>
+                <div class="link-footer"><a href="">Публичная оферта</a></div>
+                <div class="link-footer"><a href="">Как сделать заказ</a></div>
+                <div class="link-footer"><a href="">Вопрос/ответ</a></div>
+                <div class="link-footer"><a href="">Персональные данные</a></div>
+                <div class="link-footer"><a href="">Нашли дешевле</a></div>
+                <div class="link-footer"><a href="">Возврат товара</a></div>
+                <div class="link-footer"><a href="">Карта сайта</a></div>
+        </div>
+        <div class="middle-block-footer">
+            <div class="header-block-footer">Компания</div>
+                <div class="link-footer"><a href="">О компании</a></div>
+                <div class="link-footer"><a href="">Отзывы</a></div>
+                <div class="link-footer"><a href="">Сотрудничество</a></div>
+                <div class="link-footer"><a href="">Регистрация юр. лица</a></div>
+                <div class="link-footer"><a href="">Новости</a></div>
+                <div class="link-footer"><a href="">Контакты</a></div>
+        </div>
+        <div class="pre-right-block-footer">
+            <div class="header-block-footer">Поставщикам и партнерам</div>
+                <div class="link-footer"><a>Отправляйте ваше<br> коммерческое предложение<br> на почту</a></div>
+                <div class="link-footer"><a href="#">support@reybo</a></div>
+        </div>
+        <div class="right-block-footer">
+            <div class="header-block-footer">Соцсети</div>
+                <div class="link-footer"><a href="">Узнай первым о скидках</a></div>
+        </div>
+    </div>
+</footer>
+
+<body>
+
+</body>
+</html>

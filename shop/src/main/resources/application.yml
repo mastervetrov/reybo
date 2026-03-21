@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: shop
+  datasource:
+    url: jdbc:postgresql://localhost:5432/shop_db
+    username: ${POSTGRES_USERNAME:postgres}
+    password: ${POSTGRES_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: ${HIBERNATE_DDL_AUTO:create}
+    show-sql: ${HIBERNATE_SHOW_SQL:false}
+  # ======= ONLY FOR DEV =======
+  thymeleaf:
+    cache: false                    # ← ОБЯЗАТЕЛЬНО
+    prefix: classpath:/templates/  # ← Путь к исходным файлам
+    check-template-location: true
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+      additional-paths: src/main/resources
+      exclude: static/**,public/**
+    # ======= ONLY FOR DEV =======
+
+server:
+  port: 8080
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE:http://localhost:8761/eureka/}
+
+liquibase:
+  enabled: ${LIQUIBASE_ENABLED:false}
+  default-schema: ${LIQUIBASE_DEFAULT_DB_SCHEMA:frontend_schema_dev}
+
+feign:
+  clients:
+    account-service:
+      name: ${FEIGN_CLIENTS_ACCOUNT_SERVICE_NAME:account}
+      url: ${FEIGN_CLIENTS_ACCOUNT_SERVICE_URL:http://localhost:8088}
+    auth-service:
+      name: ${FEIGN_CLIENTS_AUTH_SERVICE_NAME:auth}
+      url: ${FEIGN_CLIENTS_AUTH_SERVICE_URL:http://localhost:8081}

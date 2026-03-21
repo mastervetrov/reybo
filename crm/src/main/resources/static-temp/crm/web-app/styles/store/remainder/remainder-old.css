@@ -1,0 +1,24 @@
+.table-product-list {
+    display: block;
+    overflow-y: auto;
+    height: calc(100vh - 160px);
+    border-collapse: collapse;
+    width: 100%;
+    color: black;
+    padding: 10px;
+}
+
+.table-product-list thead tr td {
+    text-align: center;
+    font-size: 1vw;
+}
+
+.table-product-list tbody tr td{
+    border-bottom: 1px solid lightgray;
+    padding-top: 10px;
+}
+
+.table-product-list tbody tr td{
+    height: 1vw;
+    text-align: center;
+}

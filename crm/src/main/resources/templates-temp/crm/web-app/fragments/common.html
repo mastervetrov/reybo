@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div class="left-part-admin-panel">
+
+        <div class="menu-admin-panel">
+            <div class="logo-like-service">
+                <img th:src="@{/reybo/web-app/media/logo/reybo-logo.png}" alt="Логотип Лайк Сервис">
+            </div>
+
+            <div class="main-wrap-menu-item wrap-menu-item">
+                <a href="/reybo/web-app/main" id="loadMain" class="button-menu-item">
+                    <span class="icon-menu-item"><img src="/reybo/web-app/media/menu/icon-home.png" alt=""></span>
+                    <span class="title-menu-item">Главная</span>
+                </a>
+            </div>
+
+            <div class="orders-wrap-menu-item wrap-menu-item">
+                <a href="/reybo/web-app/orders" id="loadOrders" class="button-menu-item">
+                    <span class="icon-menu-item"><img src="/reybo/web-app/media/menu/icon-orders.png" alt=""></span>
+                    <span class="title-menu-item">Заказы</span>
+                </a>
+            </div>
+
+            <div class="sales-wrap-menu-item wrap-menu-item">
+                <a href="/reybo/web-app/sales" id="loadSales" class="button-menu-item">
+                    <span class="icon-menu-item"><img src="/reybo/web-app/media/menu/icon-sales.png" alt=""></span>
+                    <span class="title-menu-item">Продажи</span>
+                </a>
+            </div>
+
+
+            <div class="store-wrap-menu-item wrap-menu-item">
+                <a href="#" id="switchDisplayStoreSubItemContainer" class="button-menu-item">
+                    <span class="icon-menu-item"><img src="/reybo/web-app/media/menu/icon-store.png" alt=""></span>
+                    <span class="title-menu-item">Склад</span>
+                </a>
+
+                <div id="storeSubItemContainer">
+                    <div class="wrap-menu-sub-item store-sub-item">
+                        <a href="/reybo/web-app/store/remainder" id="loadStoreRemainder" class="button-menu-sub-item">
+                        <span class="title-sub-item point-before">Остатки</span>
+                        </a>
+                    </div>
+                    <div class="wrap-menu-sub-item store-sub-item">
+                        <a href="/reybo/web-app/store/receipt" id="loadStoreReceipt" class="button-menu-sub-item">
+                        <span class="title-sub-item point-before">Поступления</span>
+                        </a>
+                    </div>
+                    <div class="wrap-menu-sub-item store-sub-item">
+                        <a href="/reybo/web-app/store/moves" id="loadStoreMoves" class="button-menu-sub-item">
+                            <span class="title-sub-item point-before">Перемещения</span>
+                        </a>
+                    </div>
+                    <div class="wrap-menu-sub-item store-sub-item">
+                        <a href="/reybo/web-app/store/returns/sales" id="loadStoreReturnsSales" class="button-menu-sub-item">
+                            <span class="title-sub-item point-before">Возвраты от клиентов</span>
+                        </a>
+                    </div>
+                    <div class="wrap-menu-sub-item store-sub-item">
+                        <a href="/reybo/web-app/store/returns/purchase" id="loadStoreReturnsPurchase" class="button-menu-sub-item">
+                            <span class="title-sub-item point-before">Возвраты поставщикам</span>
+                        </a>
+                    </div>
+                    <div class="wrap-menu-sub-item store-sub-item">
+                        <a href="/reybo/web-app/store/inventory" id="loadStoreInventory" class="button-menu-sub-item">
+                            <span class="title-sub-item point-before">Инвентаризация</span>
+                        </a>
+                    </div>
+                    <div class="wrap-menu-sub-item store-sub-item">
+                        <a href="/reybo/web-app/store/cancellations" id="loadStoreCancellations" class="button-menu-sub-item">
+                            <span class="title-sub-item point-before">Списания</span>
+                        </a>
+                    </div>
+                    <div class="wrap-menu-sub-item store-sub-item">
+                        <a href="/reybo/web-app/store/settings" id="loadStoreSettings" class="button-menu-sub-item">
+                            <span class="title-sub-item point-before">Настройка склада</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="finance-wrap-menu-item wrap-menu-item">
+                <a href="#" id="switchDisplayFinanceSubItemContainer" class="button-menu-item">
+                    <span class="icon-menu-item"><img src="/reybo/web-app/media/menu/icon-finance.png" alt=""></span>
+                    <span class="title-menu-item">Финансы</span>
+                </a>
+                <div id="financeSubItemContainer">
+                    <div class="wrap-menu-sub-item store-sub-item">
+                        <a href="/reybo/web-app/finance/cashes" id="loadFinanceCashes" class="button-menu-sub-item">
+                            <span class="title-sub-item point-before">Кассы</span>
+                        </a>
+                    </div>
+                    <div class="wrap-menu-sub-item store-sub-item">
+                        <a href="/reybo/web-app/finance/salaries" id="loadFinanceSalaries" class="button-menu-sub-item">
+                            <span class="title-sub-item point-before">Зарплата</span>
+                        </a>
+                    </div>
+                    <div class="wrap-menu-sub-item store-sub-item">
+                        <a href="/reybo/web-app/finance/transactions" id="loadFinanceTransactions" class="button-menu-sub-item">
+                            <span class="title-sub-item point-before">Транзакции</span>
+                        </a>
+                    </div>
+                    <div class="wrap-menu-sub-item store-sub-item">
+                        <a href="/reybo/web-app/finance/invoices" id="loadFinanceInvoices" class="button-menu-sub-item">
+                            <span class="title-sub-item point-before">Счета</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="analytics-wrap-menu-item wrap-menu-item">
+                <a href="#" id="switchDisplayAnalyticsSubItemContainer" class="button-menu-item">
+                    <span class="icon-menu-item"><img src="/reybo/web-app/media/menu/icon-analytics.png" alt=""></span>
+                    <span class="title-menu-item">Аналитика</span>
+                </a>
+
+                <div id="analyticsSubItemContainer">
+
+                    <div class="wrap-menu-sub-item store-sub-item">
+                        <a href="/reybo/web-app/analytics/reports/orders" id="loadAnalyticsReportsOrders" class="button-menu-sub-item">
+                            <span class="title-sub-item point-before">Отчёты</span>
+                        </a>
+                    </div>
+
+                    <div class="wrap-menu-sub-item store-sub-item">
+                        <a href="/reybo/web-app/analytics/calls" id="loadAnalyticsCalls" class="button-menu-sub-item">
+                            <span class="title-sub-item point-before">Звонки</span>
+                        </a>
+                    </div>
+
+                    <div class="wrap-menu-sub-item store-sub-item">
+                        <a href="/reybo/web-app/analytics/advertising" id="loadAnalyticsAdvertising" class="button-menu-sub-item">
+                            <span class="title-sub-item point-before">Реклама</span>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="compendiums-wrap-menu-item wrap-menu-item">
+                <a href="#" id="switchDisplayCompendiumsSubItemContainer" class="button-menu-item">
+                    <span class="icon-menu-item"><img src="/reybo/web-app/media/menu/icon-compendiums.png" alt=""></span>
+                    <span class="title-menu-item">Справка</span>
+                </a>
+
+                <div id="compendiumsSubItemContainer">
+                    <div class="wrap-menu-sub-item store-sub-item">
+                        <a href="/reybo/web-app/compendiums/nomenclatures" id="loadCompendiumsNomenclatures" class="button-menu-sub-item">
+                            <span class="title-sub-item point-before">Товары</span>
+                        </a>
+                    </div>
+                    <div class="wrap-menu-sub-item store-sub-item">
+                        <a href="/reybo/web-app/compendiums/works" id="loadCompendiumsWorks" class="button-menu-sub-item">
+                            <span class="title-sub-item point-before">Работы</span>
+                        </a>
+                    </div>
+                    <div class="wrap-menu-sub-item store-sub-item">
+                        <a href="/reybo/web-app/compendiums/contractors" id="loadCompendiumsContractors" class="button-menu-sub-item">
+                            <span class="title-sub-item point-before">Контрагенты</span>
+                        </a>
+                    </div>
+                    <div class="wrap-menu-sub-item store-sub-item">
+                        <a href="/reybo/web-app/compendiums/devices" id="loadCompendiumsDevices" class="button-menu-sub-item">
+                            <span class="title-sub-item point-before">Устройства</span>
+                        </a>
+                    </div>
+                    <div class="wrap-menu-sub-item store-sub-item">
+                        <a href="/reybo/web-app/compendiums/complete-sets" id="loadCompendiumsCompleteSets" class="button-menu-sub-item">
+                            <span class="title-sub-item point-before">Комплектации</span>
+                        </a>
+                    </div>
+                    <div class="wrap-menu-sub-item store-sub-item">
+                        <a href="/reybo/web-app/compendiums/problems" id="loadCompendiumsProblems" class="button-menu-sub-item">
+                            <span class="title-sub-item point-before">Неисправности</span>
+                        </a>
+                    </div>
+                    <div class="wrap-menu-sub-item store-sub-item">
+                        <a href="/reybo/web-app/compendiums/cash-items/income" id="loadCompendiumsCashItemsIncome" class="button-menu-sub-item">
+                            <span class="title-sub-item point-before">Статьи движения денежных средств</span>
+                        </a>
+                    </div>
+                    <div class="wrap-menu-sub-item store-sub-item">
+                        <a href="/reybo/web-app/compendiums/units" id="loadCompendiumsUnits" class="button-menu-sub-item">
+                            <span class="title-sub-item point-before">Еденицы измерения</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="settings-wrap-menu-item wrap-menu-item">
+                <a href="/reybo/web-app/settings" id="loadSettings" class="button-menu-item">
+                    <span class="icon-menu-item"><img src="/reybo/web-app/media/menu/icon-settings.png" alt=""></span>
+                    <span class="title-menu-item">Настройки</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

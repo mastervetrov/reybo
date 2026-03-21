@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Возвраты от поставщиков</title>
+    <link rel="stylesheet" th:href="@{/reybo/web-app/styles/menu.css}">
+</head>
+<body>
+<!--Левая часть-->
+<div class="left-part-admin-app">
+    <!--Меню выбора панели, панель рендерится с помощью ajax запросов, меню остается статичным-->
+    <div th:replace="~{reybo/web-app/fragments/common :: div.menu-admin-panel}"></div>
+</div>
+
+<!--Правая часть -->
+<div class="right-part-admin-app">
+    <!-- По id panelContent реализованы ajax запросы для переключения панелей, подробнее в main.js-->
+    <div id="panelContent">
+        <div class="store-returns-purchase-panel">
+
+            <div class="header-panel-content-common">
+                <div class="title-panel-common">
+                    <h1>Возвраты поставщикам</h1>
+                </div>
+            </div>
+
+            <div class="body-panel-content-common">
+
+                <div class="body-panel-content-top-common">
+                    <button class="button-panel-common">Создать</button>
+
+                    <div class="search-input-wrap-common">
+                        <input class="search-input-panel-common" placeholder="Поиск..." type="text">
+                    </div>
+
+                    <div class="input-drop-down-list-filter-wrap-common">
+                        <input class="input-dropdown-list-filter-common" placeholder="Фильтр поиска" type="text">
+                    </div>
+                </div>
+
+                <div class="body-panel-content-down-common">
+                </div>
+
+            </div>
+        </div>    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:src="@{/reybo/web-app/scripts/main.js}"></script>
+</body>
+</html>

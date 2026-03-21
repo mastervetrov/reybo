@@ -1,0 +1,1 @@
+netstat -an | grep LISTEN | grep 8761 проверить свободен ли порт

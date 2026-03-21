@@ -1,0 +1,56 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      server:  # 👈 ВСЁ ТЕПЕРЬ ЗДЕСЬ!
+        webflux:
+          globalcors:
+            cors-configurations:
+              '[/**]':
+                allowedOrigins:
+                  - "http://localhost:3000"
+                  - "http://localhost:3001"
+                  - "http://127.0.0.1:3000"
+                allowedMethods:
+                  - GET
+                  - POST
+                  - PUT
+                  - DELETE
+                  - OPTIONS
+                  - PATCH
+                allowedHeaders:
+                  - "*"
+                allowCredentials: true
+                maxAge: 3600
+          routes:
+            # ====== Auth ======
+            - id: auth
+              uri: lb://auth
+              predicates:
+                - Path=/api/v1/auth/**
+
+            # ====== SHOP ======
+            - id: shop-service
+              uri: lb://shop
+              predicates:
+                - Path=/api/v1/shop/**
+
+            # ====== CRM ======
+            - id: crm-web-app
+              uri: lb://crm
+              predicates:
+                - Path=/api/v1/crm/**
+
+            # ====== Account ======
+            - id: account
+              uri: lb://account
+              predicates:
+                - Path=/api/v1/account/**
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE}
+server:
+  port: 8765

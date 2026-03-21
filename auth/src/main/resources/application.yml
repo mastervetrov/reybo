@@ -1,0 +1,64 @@
+spring:
+  application:
+    name: auth
+  jpa:
+    hibernate:
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
+  liquibase:
+    enabled: false
+    change-log: 'classpath:/db/changelog/db.changelog-master.xml'
+  data:
+    redis:
+      host: redis
+      port: 6379
+      password: redis
+    mongodb:
+      uri: mongodb://root:root@mongodb:27017/appdatabase?authSource=admin
+  datasource:
+    url: jdbc:postgresql://postgres:5432/auth_db
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: #
+    password: #
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  kafka:
+    bootstrap-servers: kafka-broker:9092
+
+app:
+  jwt:
+    secret: "b1a2c3d4e5f6g7h8i9j0k1l2m3n4o5p6"
+    refreshTokenExpiration: 10080m
+  kafka:
+    kafkaUserTopic: "user-topic"
+    kafkaGroupId: "kafka-group-id"
+    kafkaUserStatusTopic: "user-status-topic"
+    kafkaUserPasswordChanged: "user.password.changed"
+    kafkaUserEmailChanged: "user.email.changed"
+  password-reset:
+    expiration-minutes: 30
+
+server:
+  port: 8081
+logging:
+  level:
+    reybo.authentication: DEBUG
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka:8761/eureka/
+
+feign:
+  clients:
+    account-service:
+      name: ${FEIGN_CLIENTS_ACCOUNT_SERVICE_NAME:account}
+      url: ${FEIGN_CLIENTS_ACCOUNT_SERVICE_URL:http://localhost:8088}

@@ -1,0 +1,19 @@
+import {Metadata} from "next";
+
+export const metadata: Metadata = {
+    title: 'Вход в интернет-магазин',
+    description: 'Вход и авторизация',
+};
+
+export default function LoginLayout({
+                                           children,
+                                       }: {
+    children: React.ReactNode;
+}) {
+    return (
+        <body>
+            {children}
+        </body>
+    );
+
+}

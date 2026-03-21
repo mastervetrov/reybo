@@ -1,0 +1,112 @@
+.title-panel-common {
+    display: flex;
+}
+
+.img-arrow {
+    height:2vw;
+    margin-top: 1vw;
+    padding-right: 10px;
+}
+
+.elements-container {
+    display: flex;
+    font-size: 1vw;
+}
+
+.elements-left {
+}
+
+.elements-right {
+    margin-left: 2vw;
+}
+
+.element {
+    display: flex;
+    justify-content: space-between;
+}
+
+.element input{
+    height: 1vw;
+}
+
+.element-left {
+    margin-right: 1vw;
+}
+
+.element-right {
+}
+
+#element-document {
+}
+
+#element-provider {
+}
+
+#element-store {
+}
+
+#element-responsible {
+}
+
+#element-how-to-accept-the-goods {
+}
+
+#element-document-input-number {
+}
+
+/*for-down-part*/
+.body-panel-content-down-common-store {
+    position: absolute;
+    top: 7vw;
+    bottom: 0vw;
+    right: 1.4vw;
+    left: 1.4vw;
+    border: 1px solid lightgrey;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+
+    margin-top: 3.5vw;
+}
+
+.table-receipt {
+    padding-top: 1vw;
+    width: 100%;
+}
+
+.table-receipt thead tr {
+    font-size: 1.1vw;
+    font-weight: 900;
+    text-align: center;
+}
+
+.table-receipt tbody tr {
+    font-size: 1vw;
+    text-align: center;
+}
+
+.form-product-upsert {
+    position: absolute;
+    background-color: white;
+    border-radius: 36px;
+    width: 40%;
+    right: 1vw;
+    top: 1vw;
+    bottom: 1vw;
+}
+
+.form-product-upsert p {
+    padding: 0;
+    margin: 0;
+    font-size: 1vw;
+    display: flex;
+}
+
+.form-product-upsert div {
+    display: flex;
+    flex-direction: row;
+}
+
+.form-product-upsert div div {
+    display: inline;
+    margin: auto;
+}

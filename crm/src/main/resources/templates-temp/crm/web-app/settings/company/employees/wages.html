@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Настройки компании</title>
+    <link rel="stylesheet" th:href="@{/reybo/web-app/styles/menu.css}">
+</head>
+<body>
+<!--Левая часть-->
+<div class="left-part-admin-app">
+    <!--Меню выбора панели, панель рендерится с помощью ajax запросов, меню остается статичным-->
+    <div th:replace="~{reybo/web-appfragments/common :: div.menu-admin-panel}"></div>
+</div>
+
+<!--Правая часть -->
+<div class="right-part-admin-app">
+    <!-- По id panelContent реализованы ajax запросы для переключения панелей, подробнее в main.js-->
+    <div id="panelContent">
+        <!-- Меню панели настроек -->
+        <div class="settings-panel">
+            <div th:replace="~{reybo/web-appsettings/fragments/fragments-settings.html :: div#settings-menu}"></div>
+        </div>
+        <!-- Контент -->
+        <div id="settingsEmployeesRolesContent" class="container-settings-content">
+            <div class="mainPart">
+                Настройки заработной платы перенесы в финансы (перейти)
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:src="@{/reybo/web-app/scripts/main.js}"></script>
+</body>
+</html>

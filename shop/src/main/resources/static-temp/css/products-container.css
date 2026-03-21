@@ -1,0 +1,16 @@
+.product-block {
+    background-color: #ebe8e8;
+    padding: 1%;
+    margin: 1%;
+    border-radius: 1.5vw;
+    height: 25vw;
+    width: 15.5vw;
+}
+
+.product-block h2 {
+    font-size: 1vw;
+}
+
+.product-block p {
+    font-size: 0.9vw;
+}

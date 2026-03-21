@@ -1,0 +1,23 @@
+netstat -tuln - show ports list
+sudo apt update
+
+
+<-----------INSTALLING FOR UBUNTU SERVER---------->
+sudo apt update
+sudo apt install openjdk-11-jdk -y -(version optional)
+
+wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+sudo apt install jenkins -y
+<-----------/INSTALLING FOR UBUNTU SERVER---------->
+
+<-----------EXECUTE FOR UBUNTU SERVER---------->
+sudo systemctl start jenkins - запустить службу
+sudo systemctl status jenkins - проверить службу
+sudo systemctl enable jenkins - включить службу
+
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword узнать пароль
+<-----------/EXECUTE FOR UBUNTU SERVER---------->
+
+
+

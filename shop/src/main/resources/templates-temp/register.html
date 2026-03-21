@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <link rel="stylesheet" th:href="@{/shop/styles/css/login.css}">
+    <link rel="stylesheet" th:href="@{/shop/styles/css/registration.css}">
+    <link rel="stylesheet" th:href="@{/shop/styles/css/common.css}">
+    <!-- FAVICON DIV -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $("form").on('submit', function (event) {
+                event.preventDefault();
+
+                // Собираем данные
+                var formData = {
+                    firstName: $('#firstName').val(),
+                    lastName: $('#lastName').val(),
+                    email: $('#email').val(),
+                    password1: $('#password1').val(),
+                    password2: $('#password2').val(),
+                    captchaCode: $('#captchaCode').val()
+                };
+
+                console.log("Отправка данных:", formData);
+
+                // Используем jQuery с обработкой ошибок
+                $.ajax({
+                    url: "/api/v1/auth/register",
+                    type: "POST",
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    contentType: "application/json",
+                    data: JSON.stringify(formData),
+                    dataType: "json",  // Ожидаем JSON в ответе
+                    success: function(response) {
+                        console.log("Ответ сервера:", response);
+
+                        // Проверяем структуру ответа
+                        if (response && (response.success || response.message)) {
+                            window.location.href = "/shop";
+                        } else {
+                            alert("Неожиданный ответ от сервера");
+                        }
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        console.error("Ошибка AJAX:", {
+                            status: xhr.status,
+                            statusText: xhr.statusText,
+                            responseText: xhr.responseText,
+                            textStatus: textStatus,
+                            errorThrown: errorThrown
+                        });
+
+                        var errorMessage = "Ошибка регистрации";
+                        try {
+                            var errorJson = JSON.parse(xhr.responseText);
+                            errorMessage = errorJson.message || errorJson.error || errorMessage;
+                        } catch (e) {
+                            errorMessage = xhr.responseText || errorMessage;
+                        }
+
+                        alert(errorMessage);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+
+<body>
+<div class="enter-form-container">
+    <div th:replace="~{fragments :: div.enter-form-registration}"></div>
+</div>
+</body>
+
+</body>
+</html>

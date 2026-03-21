@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${config.title} ?: 'Универсальная форма'">Универсальная форма</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fb;
+            padding: 20px;
+        }
+
+        /* Контейнер формы */
+        .form-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        /* Заголовок формы */
+        .form-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 24px 32px;
+        }
+
+        .form-header h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .form-header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        /* Тело формы */
+        .form-body {
+            padding: 32px;
+        }
+
+        /* Группа полей (секция) */
+        .form-section {
+            background: #fafbfc;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .form-section:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+        }
+
+        /* Заголовок секции */
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .section-header h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-icon {
+            font-size: 1.4rem;
+            margin-right: 8px;
+        }
+
+        /* Сетка полей */
+        .fields-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        /* Группа поля */
+        .field-group {
+            margin-bottom: 16px;
+        }
+
+        .field-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* Метка поля */
+        .field-label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 6px;
+        }
+
+        .field-label .required {
+            color: #e53e3e;
+            margin-left: 4px;
+        }
+
+        /* Поле ввода */
+        .field-input {
+            width: 100%;
+            padding: 10px 14px;
+            font-size: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .field-input:hover {
+            border-color: #cbd5e0;
+        }
+
+        .field-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .field-input:read-only {
+            background: #f7fafc;
+            cursor: not-allowed;
+        }
+
+        /* Select */
+        .field-select {
+            width: 100%;
+            padding: 10px 14px;
+            font-size: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+        }
+
+        /* Textarea */
+        .field-textarea {
+            width: 100%;
+            padding: 10px 14px;
+            font-size: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            resize: vertical;
+            min-height: 80px;
+            font-family: inherit;
+        }
+
+        /* Чекбокс */
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+        }
+
+        .checkbox-wrapper input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .checkbox-wrapper label {
+            font-size: 1rem;
+            color: #4a5568;
+            cursor: pointer;
+        }
+
+        /* Подсказка */
+        .field-hint {
+            display: block;
+            font-size: 0.8rem;
+            color: #718096;
+            margin-top: 4px;
+        }
+
+        /* Действия формы */
+        .form-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: flex-end;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 2px solid #e9ecef;
+        }
+
+        .btn {
+            padding: 12px 32px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+
+        /* Прогресс-бар */
+        .form-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            padding: 0 16px;
+        }
+
+        .progress-step {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            font-size: 0.9rem;
+            color: #a0aec0;
+            border-bottom: 3px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .progress-step.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+            font-weight: 600;
+        }
+
+        .progress-step.completed {
+            color: #48bb78;
+            border-bottom-color: #48bb78;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .form-body {
+                padding: 16px;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Основной фрагмент формы -->
+<div th:fragment="dynamicForm">
+    <div class="form-container">
+        <!-- Заголовок формы -->
+        <div class="form-header">
+            <h2 th:text="${config.title}">Заголовок формы</h2>
+            <p th:text="${config.description} ?: 'Заполните все необходимые поля'">Описание формы</p>
+        </div>
+
+        <!-- Прогресс заполнения (опционально) -->
+        <div class="form-progress" th:if="${config.showProgress}">
+            <div th:each="section, iterStat : ${config.sections}"
+                 class="progress-step"
+                 th:classappend="${iterStat.index == 0} ? 'active'"
+                 th:text="${section.title}">
+                Шаг 1
+            </div>
+        </div>
+
+        <!-- Тело формы -->
+        <div class="form-body">
+            <form th:action="${config.action}"
+                  th:method="${config.method}"
+                  th:object="${formObject}">
+
+                <!-- Итерация по секциям -->
+                <div th:each="section : ${config.sections}"
+                     class="form-section">
+
+                    <!-- Заголовок секции -->
+                    <div class="section-header">
+                        <h3>
+                            <span class="section-icon" th:text="${section.icon} ?: '📋'">📋</span>
+                            <span th:text="${section.title}">Название секции</span>
+                            <span th:if="${section.required != false}" class="required">*</span>
+                        </h3>
+                    </div>
+
+                    <!-- Описание секции -->
+                    <p th:if="${section.description}"
+                       class="field-hint"
+                       style="margin-bottom: 16px;"
+                       th:text="${section.description}">
+                        Описание секции
+                    </p>
+
+                    <!-- Содержимое секции -->
+                    <div class="section-content">
+                        <!-- Сетка полей -->
+                        <div class="fields-grid">
+                            <div th:each="field : ${section.fields}"
+                                 class="field-group"
+                                 th:classappend="${field.fullWidth} ? 'full-width'">
+
+                                <!-- Метка поля -->
+                                <label class="field-label" th:for="${field.name}">
+                                    <span th:text="${field.label}">Название поля</span>
+                                    <span th:if="${field.required}" class="required">*</span>
+                                </label>
+
+                                <!-- Поле ввода в зависимости от типа -->
+                                <th:block th:switch="${field.type}">
+                                    <!-- Текстовое поле -->
+                                    <input type="text"
+                                           th:case="'text'"
+                                           class="field-input"
+                                           th:field="*{__${field.name}__}"
+                                           th:placeholder="${field.placeholder}"
+                                           th:required="${field.required}"
+                                           th:readonly="${field.readonly}"
+                                           th:maxlength="${field.maxlength}"/>
+
+                                    <!-- Числовое поле -->
+                                    <input type="number"
+                                           th:case="'number'"
+                                           class="field-input"
+                                           th:field="*{__${field.name}__}"
+                                           th:placeholder="${field.placeholder}"
+                                           th:required="${field.required}"
+                                           th:readonly="${field.readonly}"
+                                           th:step="${field.step}"
+                                           th:min="${field.min}"
+                                           th:max="${field.max}"/>
+
+                                    <!-- Email -->
+                                    <input type="email"
+                                           th:case="'email'"
+                                           class="field-input"
+                                           th:field="*{__${field.name}__}"
+                                           th:placeholder="${field.placeholder}"
+                                           th:required="${field.required}"/>
+
+                                    <!-- Телефон -->
+                                    <input type="tel"
+                                           th:case="'tel'"
+                                           class="field-input"
+                                           th:field="*{__${field.name}__}"
+                                           th:placeholder="${field.placeholder}"
+                                           th:required="${field.required}"
+                                           th:pattern="${field.pattern}"/>
+
+                                    <!-- Дата -->
+                                    <input type="date"
+                                           th:case="'date'"
+                                           class="field-input"
+                                           th:field="*{__${field.name}__}"
+                                           th:required="${field.required}"/>
+
+                                    <!-- Время -->
+                                    <input type="time"
+                                           th:case="'time'"
+                                           class="field-input"
+                                           th:field="*{__${field.name}__}"
+                                           th:required="${field.required}"/>
+
+                                    <!-- Дата и время -->
+                                    <input type="datetime-local"
+                                           th:case="'datetime'"
+                                           class="field-input"
+                                           th:field="*{__${field.name}__}"
+                                           th:required="${field.required}"/>
+
+<!--                                    &lt;!&ndash; Выпадающий список &ndash;&gt;-->
+<!--                                    <select th:case="'select'"-->
+<!--                                            class="field-select"-->
+<!--                                            th:field="*{__${field.name}__}"-->
+<!--                                            th:required="${field.required}">-->
+<!--                                        <option th:each="option : ${field.options}"-->
+<!--                                                th:value="${option.value}"-->
+<!--                                                th:text="${option.label}">-->
+<!--                                        </option>-->
+<!--                                    </select>-->
+
+                                    <!-- Текстовая область -->
+                                    <textarea th:case="'textarea'"
+                                              class="field-textarea"
+                                              th:field="*{__${field.name}__}"
+                                              th:placeholder="${field.placeholder}"
+                                              th:required="${field.required}"
+                                              th:rows="${field.rows} ?: 3"
+                                              th:maxlength="${field.maxlength}"></textarea>
+
+                                    <!-- Чекбокс -->
+                                    <div th:case="'checkbox'" class="checkbox-wrapper">
+                                        <input type="checkbox"
+                                               th:field="*{__${field.name}__}"
+                                               th:id="${field.name}"/>
+                                        <label th:for="${field.name}"
+                                               th:text="${field.checkboxLabel} ?: ${field.label}">
+                                        </label>
+                                    </div>
+
+<!--                                    &lt;!&ndash; Радио-кнопки &ndash;&gt;-->
+<!--                                    <div th:case="'radio'" th:each="option : ${field.options}" class="checkbox-wrapper">-->
+<!--                                        <input type="radio"-->
+<!--                                               th:field="*{__${field.name}__}"-->
+<!--                                               th:value="${option.value}"-->
+<!--                                               th:id="${field.name} + '_' + ${option.value}"/>-->
+<!--                                        <label th:for="${field.name} + '_' + ${option.value}"-->
+<!--                                               th:text="${option.label}">-->
+<!--                                        </label>-->
+<!--                                    </div>-->
+
+                                    <!-- Пароль -->
+                                    <input type="password"
+                                           th:case="'password'"
+                                           class="field-input"
+                                           th:field="*{__${field.name}__}"
+                                           th:placeholder="${field.placeholder}"
+                                           th:required="${field.required}"/>
+
+                                    <!-- Цвет -->
+                                    <input type="color"
+                                           th:case="'color'"
+                                           class="field-input"
+                                           th:field="*{__${field.name}__}"
+                                           style="height: 40px; padding: 4px;"/>
+
+                                    <!-- Файл -->
+                                    <input type="file"
+                                           th:case="'file'"
+                                           class="field-input"
+                                           th:name="${field.name}"
+                                           th:accept="${field.accept}"
+                                           th:multiple="${field.multiple}"/>
+                                </th:block>
+
+<!--                                &lt;!&ndash; Подсказка &ndash;&gt;-->
+<!--                                <small th:if="${field.hint}"-->
+<!--                                       class="field-hint"-->
+<!--                                       th:text="${field.hint}">-->
+<!--                                </small>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Кнопки действий -->
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="history.back()">
+                        Отмена
+                    </button>
+                    <button type="submit" class="btn btn-primary"
+                            th:text="${config.submitText} ?: 'Сохранить'">
+                        Сохранить
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Готовые фрагменты для разных типов форм -->
+<div th:fragment="orderForm">
+    <div th:replace="~{this :: dynamicForm}"></div>
+</div>
+
+<div th:fragment="productForm">
+    <div th:replace="~{this :: dynamicForm}"></div>
+</div>
+
+<div th:fragment="receiptForm">
+    <div th:replace="~{this :: dynamicForm}"></div>
+</div>
+
+<div th:fragment="taskForm">
+    <div th:replace="~{this :: dynamicForm}"></div>
+</div>
+
+</body>
+</html>

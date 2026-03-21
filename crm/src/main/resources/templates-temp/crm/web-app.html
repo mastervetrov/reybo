@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/reybo/web-app/styles/menu.css}">
+</head>
+<body>
+
+<div class="left-part-admin-panel">
+    <div th:replace="~{reybo/web-app/fragments/common :: div.menu-admin-panel}">
+    </div>
+</div>
+<div class="right-part-admin-panel">
+        <!--По умолчанию открывается панель заказов - orders-panel-->
+        <div id="panelContent">
+            <div th:replace="~{reybo/web-app/orders :: div.orders-panel}"></div>
+        </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:src="@{/reybo/web-app/scripts/main.js}"></script>
+</body>
+</html>

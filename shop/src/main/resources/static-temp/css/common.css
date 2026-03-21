@@ -1,0 +1,22 @@
+@font-face {
+    font-family: 'Arsenal_SC';
+    src: url('/shop/styles/css/fonts/Arsenal_SC/ArsenalSC-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+body {
+    font-family: 'Arsenal_SC', sans-serif;
+}
+
+
+
+
+
+
+

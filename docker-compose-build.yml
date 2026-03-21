@@ -1,0 +1,152 @@
+include:
+  - infrastructure-compose.yml
+
+services:
+  # ============ACCOUNT==========
+  account:
+    build:
+      context: .
+      dockerfile: account/Dockerfile
+    container_name: account
+    ports:
+      - "8088:8088"  # host:container
+    environment:
+      # Spring Boot
+      SPRING_PROFILES_ACTIVE: prod
+      SERVER_PORT: 8088
+
+      # Eureka
+      EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE: http://eureka:8761/eureka/
+      EUREKA_CLIENT_REGISTER_WITH_EUREKA: true
+      EUREKA_CLIENT_FETCH_REGISTRY: true
+
+      # PostgresSQL (Account DB)
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/account_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres  # ← берётся из .env или env
+
+      # Kafka
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka-broker:9092
+
+      # Redis
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+    networks:
+      - microservices-net
+  # ============AUTH==================
+  auth:
+    container_name: auth
+    depends_on:
+      - mongodb
+      - redis
+    build:
+      context: .
+      dockerfile: auth/Dockerfile
+    ports:
+      - "8081:8081"
+    environment:
+      # FEIGN
+      FEIGN_CLIENTS_ACCOUNT_SERVICE_NAME: account
+      FEIGN_CLIENTS_ACCOUNT_SERVICE_URL: http://account:8088
+      SPRING_JPA_HIBERNATE_DDL_AUTO: create
+      EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE: http://eureka:8761/eureka/
+      SERVER_PORT: 8081
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka-broker:9092
+      SPRING_DATA_MONGODB_URI: mongodb://root:root@mongodb:27017/appdatabase?authSource=admin
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/auth_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+    networks:
+      - microservices-net
+
+  redis:
+    image: redis:7.0.12
+    container_name: redis
+    command: [ "redis-server", "--appendonly", "yes", "--requirepass", "redis" ]
+    ports:
+      - "6379:6379"
+    networks:
+      - microservices-net
+
+  mongodb:
+    image: mongo:4.4.24
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: appdatabase
+    networks:
+      - microservices-net
+
+  # ============GATEWAY===============
+  gateway:
+    container_name: gateway
+    build:
+      context: .
+      dockerfile: gateway/Dockerfile
+    ports:
+      - "8765:8765"
+    environment:
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE=http://eureka:8761/eureka/
+    depends_on:
+      - eureka
+    networks:
+      - microservices-net
+
+  # ============FRONTEND===============
+  frontend:
+    container_name: shop
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      # OPEN FEIGN
+      - FEIGN_CLIENTS_AUTH_SERVICE_NAME=auth
+      - FEIGN_CLIENTS_AUTH_SERVICE_URL=http://auth:8081
+      - FEIGN_CLIENTS_ACCOUNT_SERVICE_NAME=account
+      - FEIGN_CLIENTS_ACCOUNT_SERVICE_URL=http://account:8088
+      - SPRING_PROFILES_ACTIVE=prod
+      - POSTGRES_URL=jdbc:postgresql://postgres:5432/shop_db
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USERNAME=postgres
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE=http://eureka:8761/eureka/
+      - HIBERNATE_DDL_AUTO_MODE=create
+      - HIBERNATE_SHOW_SQL=true
+      - LIQUIBASE_ENABLED=false
+      - LIQUIBASE_DEFAULT_DB_SCHEMA=frontend_schema
+    depends_on:
+      - eureka
+      - postgres
+    networks:
+      - microservices-net
+
+  # ============CRM===============
+  crm:
+    container_name: crm
+    build:
+      context: .
+      dockerfile: crm/Dockerfile
+    ports:
+      - "8082:8082"
+    environment:
+      - POSTGRES_URL=jdbc:postgresql://postgres:5432/crm_db
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USERNAME=postgres
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE=http://eureka:8761/eureka/
+      - HIBERNATE_DDL_AUTO_MODE=create
+      - LIQUIBASE_ENABLED=false
+      - LIQUIBASE_DEFAULT_DB_SCHEMA=crm_schema
+    depends_on:
+      - eureka
+      - postgres
+    networks:
+      - microservices-net
+
+networks:
+  microservices-net:

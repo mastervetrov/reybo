@@ -1,0 +1,47 @@
+.enter-form-registration {
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    border-radius: 40px;
+    width: 30vw;
+    height: 90vh;
+    color: white;
+    background-color: white;
+}
+
+.account_is_exist_link {
+    margin-top: 20px;
+    text-align: right;
+}
+.account_is_exist_link a {
+    margin-left: auto;
+    margin-top: 1.2vw;
+    color: grey;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1vw;
+}
+
+.form-container form input {
+    padding-left: 2.5%;
+    border-radius: 12px;
+    border-width: 1px;
+    height: 2vw;
+    margin-top: 0.5vw;
+    width: 95%;
+    font-size: 0.9vw;
+}
+
+.captcha-container {
+    height: 2vw;
+    margin-top: 0.5vw;
+}
+
+.captcha-container img {
+    width: 50%;
+    border-radius: 12px;
+    height: 2vw;
+}
