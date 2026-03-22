@@ -102,7 +102,7 @@ services:
     container_name: shop
     build:
       context: .
-      dockerfile: frontend/Dockerfile
+      dockerfile: front/Dockerfile
     ports:
       - "8080:8080"
     environment:
