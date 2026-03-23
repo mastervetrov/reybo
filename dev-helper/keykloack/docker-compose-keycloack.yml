@@ -1,0 +1,10 @@
+# Примитивный файл
+services:
+  keycloack:
+    image: quay.io/keycloack/keycloack:26.4.1
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+    ports:
+      - "8091:8080"
+    command: ["start-dev"]

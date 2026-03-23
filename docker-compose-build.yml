@@ -1,6 +1,6 @@
 include:
-  - infrastructure-compose.yml
-
+  - docker-compose-infrastructure.yml
+  - docker-compose-keycloack.yml
 services:
   # ============ACCOUNT==========
   account:
@@ -9,7 +9,7 @@ services:
       dockerfile: account/Dockerfile
     container_name: account
     ports:
-      - "8088:8088"  # host:container
+      - "8088:8088"
     environment:
       # Spring Boot
       SPRING_PROFILES_ACTIVE: prod
@@ -23,7 +23,7 @@ services:
       # PostgresSQL (Account DB)
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/account_db
       SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: postgres  # ← берётся из .env или env
+      SPRING_DATASOURCE_PASSWORD: postgres
 
       # Kafka
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka-broker:9092

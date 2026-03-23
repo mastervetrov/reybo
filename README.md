@@ -48,5 +48,5 @@
 - axios
 
 ## Brokers
-- Kafka
+- Kafka или RabbitMQ
 
