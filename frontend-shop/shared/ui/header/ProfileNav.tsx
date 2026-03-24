@@ -6,7 +6,7 @@ export const ProfileNav = () => {
 
     return (
         <div className={styles.linkNav}>
-            <Link href="/auth/shop/login" className={styles.navLink}>
+            <Link href="/auth/login" className={styles.navLink}>
                 <Image
                     src="/header/profile-icon.png"
                     alt="Имя"

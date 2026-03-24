@@ -1,0 +1,124 @@
+.enterFormContainer {
+    margin-top: 2vw;
+    width: 100vw;
+    display: flex;
+}
+
+.enterForm {
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    border-radius: 40px;
+    width: 30vw;
+    min-height: 90vh;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.logoWrap {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4vh;
+}
+
+.logoWrap img {
+    height: 4vw;
+}
+
+.titleLoginContainer {
+    color: black;
+    text-align: center;
+    font-size: 0.8vw;
+}
+
+.formContainer {
+    margin: auto;
+    margin-top: 0;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.formContainer form {
+    width: 20vw;
+}
+
+.formContainer form input {
+    padding-left: 2.5%;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    height: 2.5vw;
+    margin-top: 1.1vw;
+    margin-bottom: 1.1vw;
+    width: 95%;
+    font-size: 0.9vw;
+}
+
+.formContainer form input:focus {
+    outline: none;
+    border-color: darkseagreen;
+}
+
+.buttonEnterContainer {
+    display: flex;
+}
+
+.buttonEnterContainer button {
+    margin-left: auto;
+    width: 100%;
+    height: 2.5vw;
+    margin-top: 1.1vw;
+    border-radius: 12px;
+    background-color: darkseagreen;
+    color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.buttonEnterContainer button:hover {
+    background-color: forestgreen;
+}
+
+.buttonForgotPasswordContainer {
+    display: flex;
+    margin-top: 0.8vw;
+}
+
+.buttonForgotPasswordContainer a {
+    margin-left: auto;
+    color: grey;
+    text-decoration: none;
+    font-size: 1vw;
+}
+
+.buttonForgotPasswordContainer a:hover {
+    color: #666;
+}
+
+.buttonRegistrationContainer {
+    display: flex;
+    margin-top: 2.5vw;
+}
+
+.buttonRegistrationContainer a {
+    margin-left: auto;
+    text-decoration: none;
+    font-size: 1vw;
+    font-weight: bold;
+    color: mediumblue;
+}
+
+.buttonRegistrationContainer a:hover {
+    color: darkblue;
+}
+
+.error {
+    color: red;
+    font-size: 0.9vw;
+    margin-top: 0.5vw;
+    text-align: center;
+}
