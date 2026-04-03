@@ -28,9 +28,21 @@ extra["springCloudVersion"] = "2025.0.0"
 dependencies {
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")
+
+    // W E B F L U X
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
+
+    // SPRING CLOUD
 	implementation("org.springframework.cloud:spring-cloud-starter-gateway")
 	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
+
+    // SECURITY DEPENDENCIES
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
+
+    // STORAGE FOR SESSION
+    implementation("org.springframework.boot:spring-boot-starter-data-redis-reactive")
 }
 
 dependencyManagement {

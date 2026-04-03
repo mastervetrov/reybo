@@ -31,6 +31,7 @@ services:
       - "9092:9092"
     networks:
       - microservices-net
+      - keycloak-net
   # ============Zookeeper==================
   zookeeper:
     image: confluentinc/cp-zookeeper:7.4.0
@@ -42,6 +43,7 @@ services:
       - "2181:2181"
     networks:
       - microservices-net
+      - keycloak-net
   # ============POSTGRES-DB===============
   postgres:
     container_name: postgres
@@ -57,12 +59,12 @@ services:
       - postgres_data:/var/lib/postgresql
     networks:
       - microservices-net
-      - keycloack-net
+      - keycloak-net
     restart: unless-stopped
 
 networks:
   microservices-net:
-  keycloack-net:
+  keycloak-net:
 
 volumes:
   postgres_data:
