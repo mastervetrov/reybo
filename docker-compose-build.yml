@@ -72,52 +72,32 @@ services:
   # =================== KEYCLOAK ===================
   keycloak:
     container_name: keycloak
-#    image: quay.io/keycloak/keycloak:26.4.1 сервер должен иметь соверменный проц с поддержкой инструкций, иначе Fatal glibc error: CPU does not support x86-64-v2
     image: quay.io/keycloak/keycloak:15.1.1
 
-#    command: start-dev
-    #    command: start --optimized для продакшн
     environment:
-      KC_LOG_LEVEL: DEBUG
+      KEYCLOAK_LOGLEVEL: DEBUG
 
-      KC_DB: postgres
-      KC_DB_URL: jdbc:postgresql://postgres:5432/${KEYCLOAK_DB_TITLE}
-      KC_DB_USERNAME: ${KEYCLOAK_DB_USERNAME}
-      KC_DB_PASSWORD: ${KEYCLOAK_DB_PASSWORD}
-      KC_HOSTNAME: auth.reybo.ru
-      KC_HOSTNAME_PORT: 8080
-      KC_PROXY: edge
-      KC_PROXY_HEADERS: xforwarded
-      KC_HOSTNAME_STRICT: "true"
-      KC_HTTP_PORT: 8080
-      KC_HTTP_ENABLED: "true"
-      KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_ADMIN_USERNAME}
-      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
-      # ========= Настройка пулов ===========
-      KC_DB_POOL_INITIAL_SIZE: "5"
-      KC_DB_POOL_MIN_SIZE: "5"
-      KC_DB_POOL_MAX_SIZE: "10"
-      # ========= Настройка JAVA ===========
-      JAVA_OPTS_KC_HEAP: "-XX:MaxRAMPercentage=70"
-      # OLD KEYCLOAK PART
-      PROXY_ADDRESS_FORWARDING: "true"
-      KEYCLOAK_HOSTNAME: auth.reybo.ru
-      KEYCLOAK_USER: ${KEYCLOAK_ADMIN_USERNAME}
-      KEYCLOAK_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
       DB_VENDOR: postgres
       DB_ADDR: postgres
       DB_PORT: 5432
-      DB_DATABASE: keycloak_db
-      DB_USER: postgres
-      DB_PASSWORD: postgres
-      # OLD KEYCLOAK PART
+      DB_DATABASE: ${KEYCLOAK_DB_TITLE}
+      DB_USER: ${KEYCLOAK_DB_USERNAME}
+      DB_PASSWORD: ${KEYCLOAK_DB_PASSWORD}
+
+      # Hostname & Proxy
+      KEYCLOAK_HOSTNAME: auth.reybo.ru
+      KEYCLOAK_PORT: 8080
+      PROXY_ADDRESS_FORWARDING: "true"
+
+      # Admin
+      KEYCLOAK_USER: ${KEYCLOAK_ADMIN_USERNAME}
+      KEYCLOAK_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+
+      # Java opts
+      JAVA_OPTS: "-Xms512m -Xmx768m -XX:MaxRAMPercentage=70"
+
     ports:
       - "8080:8080"
-    deploy:
-      resources:
-        limits:
-          memory: 1G
-          cpus: "1"
     networks:
       - keycloak-net
   # =================== /KEYCLOAK ===================
