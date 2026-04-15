@@ -109,7 +109,7 @@ services:
       KEYCLOAK_USER: ${KEYCLOAK_ADMIN_USERNAME}
       KEYCLOAK_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
       DB_VENDOR: postgres
-      DB_ADDR: postgres  # ← имя сервиса PostgreSQL в Docker сети
+      DB_ADDR: postgres
       DB_PORT: 5432
       DB_DATABASE: keycloak_db
       DB_USER: postgres
