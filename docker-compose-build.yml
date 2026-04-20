@@ -75,7 +75,7 @@ services:
     image: quay.io/keycloak/keycloak:26.4.1
 
     command: start-dev
-    # command: start --optimized для продакшн
+    # command: start --optimized для продакшн update for test
     environment:
       KC_DB: postgres
       KC_DB_URL: jdbc:postgresql://postgres:5432/${KEYCLOAK_DB_TITLE}
