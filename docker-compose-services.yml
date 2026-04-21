@@ -64,6 +64,7 @@ services:
       - "8765:8765"
     environment:
       - EUREKA_CLIENT_SERVICE_URL_DEFAULT_ZONE=http://eureka:8761/eureka/
+      - KEYCLOAK_CLIENT_SECRET_OF_GATEWAY=${KEYCLOAK_CLIENT_SECRET_OF_GATEWAY}
     depends_on:
       - eureka
     networks:
