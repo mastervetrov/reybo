@@ -69,6 +69,7 @@ services:
     networks:
       - microservices-net
       - keycloak-net
+      - frontend-net
   # =================== KEYCLOAK ===================
   keycloak:
     container_name: keycloak
@@ -160,3 +161,4 @@ services:
 networks:
   microservices-net:
   keycloak-net:
+  frontend-net:

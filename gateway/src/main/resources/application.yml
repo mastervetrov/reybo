@@ -29,40 +29,33 @@ spring:
       server:
         webflux:
           routes:
-            - id: shop-service
-              uri: lb://shop
+            - id: frontend-crm
+              uri: http://frontend-crm:3000
               predicates:
-                - Path=/api/v1/shop/**
+                - Host=crm.reybo.ru
               filters:
                 - TokenRelay=
 
-            - id: crm-web-app
-              uri: lb://crm
-              predicates:
-                - Path=/api/v1/crm/**
-              filters:
-                - TokenRelay=
-
-            - id: account
-              uri: lb://account
-              predicates:
-                - Path=/api/v1/account/**
-              filters:
-                - TokenRelay=
+#            - id: api-crm
+#              uri: lb://api-crm
+#              predicates:
+#                - Host=api.crm.reybo.ru
+#              filters:
+#                - TokenRelay=
 
             - id: frontend-shop
-              uri: lb://frontend-shop
+              uri: http://frontend-shop:3000
               predicates:
-                - Path=/api/v1/frontend-shop/**
+                - Host=reybo.ru
               filters:
                 - TokenRelay=
 
-            - id: frontend-crm
-              uri: lb://frontend-crm
-              predicates:
-                - Path=/api/v1/frontend-crm/**
-              filters:
-                - TokenRelay=
+#            - id: api-shop
+#              uri: lb://api-shop
+#              predicates:
+#                - Host=api.shop.reybo.ru
+#              filters:
+#                - TokenRelay=
 
 eureka:
   client:

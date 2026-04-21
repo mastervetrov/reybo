@@ -13,5 +13,5 @@ COPY frontend-shop/ .
 # Собираем приложение
 RUN npm run build
 
-EXPOSE 8082
+EXPOSE 3000
 CMD ["npm", "start"]

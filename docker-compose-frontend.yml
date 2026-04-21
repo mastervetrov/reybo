@@ -5,9 +5,9 @@ services:
       context: .
       dockerfile: frontend-crm/Dockerfile
     ports:
-      - "8081:8081"
+      - "8083:3000"
     networks:
-      - microservices-net
+      - frontend-net
 
   frontend-shop:
     container_name: frontend-shop
@@ -15,9 +15,10 @@ services:
       context: .
       dockerfile: frontend-shop/Dockerfile
     ports:
-      - "8082:8082"
+      - "8084:3000"
     networks:
-      - microservices-net
+      - frontend-net
 
 networks:
-  microservices-net:
+  frontend-net:
+    driver: bridge
