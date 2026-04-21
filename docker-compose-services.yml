@@ -75,38 +75,47 @@ services:
   keycloak:
     container_name: keycloak
     image: quay.io/keycloak/keycloak:26.4.1
-
     command: start-dev
-    # command: start --optimized для продакшн update for test
     environment:
       KC_DB: postgres
       KC_DB_URL: jdbc:postgresql://postgres:5432/${KEYCLOAK_DB_TITLE}
       KC_DB_USERNAME: ${KEYCLOAK_DB_USERNAME}
       KC_DB_PASSWORD: ${KEYCLOAK_DB_PASSWORD}
+
       KC_HOSTNAME: auth.reybo.ru
-      KC_HOSTNAME_STRICT: "true"
+      KC_HOSTNAME_STRICT: false
+      KC_HOSTNAME_BACKCHANNEL_DYNAMIC: true
+      KC_HTTP_ENABLED: true
       KC_HTTP_PORT: 8080
-      KC_HTTP_ENABLED: "true"
-      KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_ADMIN_USERNAME}
-      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+
       KC_PROXY: edge
       KC_PROXY_HEADERS: xforwarded
-      # ========= Настройка пулов ===========
+
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_ADMIN_USERNAME}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+
       KC_DB_POOL_INITIAL_SIZE: "5"
       KC_DB_POOL_MIN_SIZE: "5"
       KC_DB_POOL_MAX_SIZE: "10"
-      # ========= Настройка JAVA ===========
+
       JAVA_OPTS_KC_HEAP: "-XX:MaxRAMPercentage=70"
+
+      KC_LOG_LEVEL: INFO
+
     ports:
       - "8080:8080"
+
     deploy:
       resources:
         limits:
           memory: 1G
           cpus: "1"
+
     networks:
       - keycloak-net
-  # =================== /KEYCLOAK ===================
+      - frontend-net
+
+    # =================== /KEYCLOAK ===================
 
   frontend-crm:
     container_name: frontend-crm
