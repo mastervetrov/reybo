@@ -68,16 +68,13 @@ eureka:
 server:
   port: 8765
   forward-headers-strategy: native
-  error:
-    include-message: always
-    include-binding-errors: always
   servlet:
     session:
       cookie:
-        domain: .reybo.ru
-        name: SESSION
+        name: GATEWAY_SESSION
         http-only: true
         secure: true
+        same-site: lax
 
 logging:
   level:

@@ -3,40 +3,27 @@ package com.reybo.gateway.common.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
-import org.springframework.security.config.web.server.ServerHttpSecurity;
-import org.springframework.security.oauth2.client.web.server.WebSessionOAuth2ServerAuthorizationRequestRepository;
-import org.springframework.security.web.server.SecurityWebFilterChain;
-import org.springframework.security.web.server.authentication.RedirectServerAuthenticationSuccessHandler;
-import org.springframework.security.web.server.context.WebSessionServerSecurityContextRepository;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableWebFluxSecurity
+@EnableWebSecurity
 public class SecurityConfiguration {
 
     @Bean
-    public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http) {
-        return http
-                .csrf(csrf -> csrf.disable())
-                .cors(cors -> cors.disable())
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-                .securityContextRepository(new WebSessionServerSecurityContextRepository())
-
-                .authorizeExchange(exchanges -> exchanges
-                        .pathMatchers("/error", "/actuator/health").permitAll()
-                        .pathMatchers("/manager.html").hasRole("MANAGER")
-                        .anyExchange().authenticated()
+        http
+                .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers("/error").permitAll()
+                        .requestMatchers("/manager.html").hasRole("MANAGER")
+                        .anyRequest().authenticated()
                 )
-
-                .oauth2Login(oauth2 -> oauth2
-                        .authorizationRequestRepository(new WebSessionOAuth2ServerAuthorizationRequestRepository())
-                        .authenticationSuccessHandler(new RedirectServerAuthenticationSuccessHandler("https://reybo.ru"))
-                )
-
-                .oauth2ResourceServer(oauth2 -> oauth2
+                .oauth2ResourceServer((oauth2) -> oauth2
                         .jwt(Customizer.withDefaults())
                 )
-
-                .build();
+                .oauth2Login(Customizer.withDefaults());
+        return http.build();
     }
 }
