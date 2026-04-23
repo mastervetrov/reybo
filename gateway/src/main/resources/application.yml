@@ -31,12 +31,14 @@ spring:
           uri: http://frontend-crm:3000
           predicates:
             - Host=crm.reybo.ru
+            - Path=/**
           filters:
             - TokenRelay=
         - id: frontend-shop
           uri: http://frontend-shop:3000
           predicates:
             - Host=reybo.ru
+            - Path=/**
           filters:
             - TokenRelay=
 
