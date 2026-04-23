@@ -13,17 +13,30 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.disable())
 
-        http
-                .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/error").permitAll()
-                        .requestMatchers("/manager.html").hasRole("MANAGER")
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/error", "/actuator/health").permitAll()
                         .anyRequest().authenticated()
                 )
-                .oauth2ResourceServer((oauth2) -> oauth2
+
+                .oauth2Login(oauth2 -> oauth2
+                        .successHandler((request, response, authentication) -> {
+                            response.sendRedirect("https://reybo.ru");
+                        })
+                )
+
+                .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(Customizer.withDefaults())
                 )
-                .oauth2Login(Customizer.withDefaults());
-        return http.build();
+
+                .sessionManagement(session -> session
+                        .sessionFixation().migrateSession()
+                        .maximumSessions(1)
+                )
+
+                .build();
     }
 }
