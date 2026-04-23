@@ -74,5 +74,29 @@ server:
 
 logging:
   level:
+    # Основное логирование OAuth2 и Security
+    org.springframework.security: DEBUG
     org.springframework.security.oauth2: TRACE
+    org.springframework.security.oauth2.client: TRACE
+    org.springframework.security.oauth2.client.web: DEBUG
+    org.springframework.security.oauth2.client.web.server: DEBUG
+    org.springframework.security.oauth2.client.registration: DEBUG
+    org.springframework.security.oauth2.core: DEBUG
+    org.springframework.security.oauth2.jwt: DEBUG
+    org.springframework.security.web.server: DEBUG
+    org.springframework.security.web.server.authentication: DEBUG
+    org.springframework.web.server: DEBUG
     org.springframework.web.reactive.function.client: TRACE
+    org.springframework.web.reactive.function.client.ExchangeFunctions: TRACE
+    org.springframework.http.codec.json: DEBUG
+
+    # Логирование ошибок
+    org.springframework.boot.autoconfigure.security: DEBUG
+    reactor.netty.http.client: DEBUG
+
+    # Ваш пакет
+    com.reybo.gateway: DEBUG
+
+    # Отключить лишнее (опционально)
+    org.hibernate: WARN
+    org.springframework.cloud.commons: INFO
