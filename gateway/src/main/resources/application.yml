@@ -18,7 +18,7 @@ spring:
         provider:
           keycloak:
             issuer-uri: https://auth.reybo.ru/realms/shop
-#            user-name-attribute: preferred_name
+            user-name-attribute: preferred_username
 
       resourceserver:
         jwt:
