@@ -2,6 +2,8 @@ package com.reybo.gateway.common.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,6 +14,7 @@ import org.springframework.security.oauth2.server.resource.authentication.Reacti
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
@@ -34,27 +37,25 @@ public class SecurityConfiguration {
 
                 .oauth2Login(oauth2 -> oauth2
                         .authenticationSuccessHandler((webFilterExchange, authentication) -> {
-                            log.info("=== OAuth2 Login Success ===");
-                            log.info("Authentication: {}", authentication);
+                            log.info("Login SUCCESS, redirecting to https://reybo.ru");
 
-                            webFilterExchange.getExchange().getResponse().setStatusCode(
-                                    org.springframework.http.HttpStatus.FOUND
-                            );
-                            webFilterExchange.getExchange().getResponse().getHeaders().setLocation(
-                                    URI.create("/")
-                            );
+                            ServerWebExchange exchange = webFilterExchange.getExchange();
+                            ServerHttpResponse response = exchange.getResponse();
+
+                            response.setStatusCode(HttpStatus.FOUND);
+                            response.getHeaders().setLocation(URI.create("https://reybo.ru"));
+
                             return Mono.empty();
                         })
                         .authenticationFailureHandler((webFilterExchange, exception) -> {
-                            log.error("=== OAuth2 Login Failed ===");
-                            log.error("Error: {}", exception.getMessage());
+                            log.error("Login FAILED: {}", exception.getMessage());
 
-                            webFilterExchange.getExchange().getResponse().setStatusCode(
-                                    org.springframework.http.HttpStatus.FOUND
-                            );
-                            webFilterExchange.getExchange().getResponse().getHeaders().setLocation(
-                                    URI.create("/login?error")
-                            );
+                            ServerWebExchange exchange = webFilterExchange.getExchange();
+                            ServerHttpResponse response = exchange.getResponse();
+
+                            response.setStatusCode(HttpStatus.FOUND);
+                            response.getHeaders().setLocation(URI.create("/login?error"));
+
                             return Mono.empty();
                         })
                 )
@@ -62,25 +63,15 @@ public class SecurityConfiguration {
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt
                                 .jwtAuthenticationConverter(
-                                        new ReactiveJwtAuthenticationConverterAdapter(jwtMono -> {
-                                            log.debug("JWT Authentication: {}", jwtMono.getClaimAsString("preferred_username"));
-                                            return new JwtAuthenticationToken(
-                                                    jwtMono,
-                                                    extractRoles(jwtMono)
-                                            );
-                                        })
+                                        new ReactiveJwtAuthenticationConverterAdapter(jwtMono ->
+                                                new JwtAuthenticationToken(jwtMono, extractRoles(jwtMono))
+                                        )
                                 )
                         )
                 )
 
                 .authorizeExchange(exchanges -> exchanges
-                        .pathMatchers(
-                                "/auth/**",
-                                "/login/**",
-                                "/oauth2/**"
-                        ).permitAll()
-                        .pathMatchers("/api/v1/admin/**").hasRole("ADMIN")
-                        .pathMatchers("/api/v1/**").hasAnyRole("ADMIN", "USER")
+                        .pathMatchers("/auth/**", "/login/**", "/oauth2/**").permitAll()
                         .anyExchange().authenticated()
                 )
 
